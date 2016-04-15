@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yanbh.ssm.dao.StudentInfoMapper">
+	<resultMap id="BaseResultMap" type="com.yanbh.ssm.entity.StudentInfo">
+		<id column="STUDENT_ID" property="studentId" jdbcType="VARCHAR" />
+		<result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR" />
+		<result column="STUDENT_SEX" property="studentSex" jdbcType="VARCHAR" />
+		<result column="STUDENT_BIRTHDAY" property="studentBirthday" jdbcType="DATE" />
+		<result column="CLASS_ID" property="classId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		STUDENT_ID, STUDENT_NAME, STUDENT_SEX, STUDENT_BIRTHDAY, CLASS_ID
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from STUDENT_TBL
+		where STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectStuList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from STUDENT_TBL
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from STUDENT_TBL
+		where STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.yanbh.ssm.entity.StudentInfo">
+		insert into STUDENT_TBL (STUDENT_ID, STUDENT_NAME, STUDENT_SEX,
+		STUDENT_BIRTHDAY, CLASS_ID)
+		values (#{studentId,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR},
+		#{studentSex,jdbcType=VARCHAR},
+		#{studentBirthday,jdbcType=DATE}, #{classId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.yanbh.ssm.entity.StudentInfo">
+		insert into STUDENT_TBL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="studentId != null">
+				STUDENT_ID,
+			</if>
+			<if test="studentName != null">
+				STUDENT_NAME,
+			</if>
+			<if test="studentSex != null">
+				STUDENT_SEX,
+			</if>
+			<if test="studentBirthday != null">
+				STUDENT_BIRTHDAY,
+			</if>
+			<if test="classId != null">
+				CLASS_ID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="studentId != null">
+				#{studentId,jdbcType=VARCHAR},
+			</if>
+			<if test="studentName != null">
+				#{studentName,jdbcType=VARCHAR},
+			</if>
+			<if test="studentSex != null">
+				#{studentSex,jdbcType=VARCHAR},
+			</if>
+			<if test="studentBirthday != null">
+				#{studentBirthday,jdbcType=DATE},
+			</if>
+			<if test="classId != null">
+				#{classId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yanbh.ssm.entity.StudentInfo">
+		update STUDENT_TBL
+		<set>
+			<if test="studentName != null">
+				STUDENT_NAME = #{studentName,jdbcType=VARCHAR},
+			</if>
+			<if test="studentSex != null">
+				STUDENT_SEX = #{studentSex,jdbcType=VARCHAR},
+			</if>
+			<if test="studentBirthday != null">
+				STUDENT_BIRTHDAY = #{studentBirthday,jdbcType=DATE},
+			</if>
+			<if test="classId != null">
+				CLASS_ID = #{classId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yanbh.ssm.entity.StudentInfo">
+		update STUDENT_TBL
+		set STUDENT_NAME = #{studentName,jdbcType=VARCHAR},
+		STUDENT_SEX = #{studentSex,jdbcType=VARCHAR},
+		STUDENT_BIRTHDAY = #{studentBirthday,jdbcType=DATE},
+		CLASS_ID = #{classId,jdbcType=VARCHAR}
+		where STUDENT_ID = #{studentId,jdbcType=VARCHAR}
+	</update>
+</mapper>

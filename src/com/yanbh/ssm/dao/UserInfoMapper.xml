@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yanbh.ssm.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.yanbh.ssm.entity.UserInfo" >
+    <id column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_SEX" property="userSex" jdbcType="VARCHAR" />
+    <result column="USER_BIRTHDAY" property="userBirthday" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USER_ID, USER_NAME, USER_SEX, USER_BIRTHDAY
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from USER_TBL
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from USER_TBL
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yanbh.ssm.entity.UserInfo" >
+    insert into USER_TBL (USER_ID, USER_NAME, USER_SEX, 
+      USER_BIRTHDAY)
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=VARCHAR}, 
+      #{userBirthday,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yanbh.ssm.entity.UserInfo" >
+    insert into USER_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="userSex != null" >
+        USER_SEX,
+      </if>
+      <if test="userBirthday != null" >
+        USER_BIRTHDAY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        #{userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="userBirthday != null" >
+        #{userBirthday,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yanbh.ssm.entity.UserInfo" >
+    update USER_TBL
+    <set >
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        USER_SEX = #{userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="userBirthday != null" >
+        USER_BIRTHDAY = #{userBirthday,jdbcType=DATE},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yanbh.ssm.entity.UserInfo" >
+    update USER_TBL
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_SEX = #{userSex,jdbcType=VARCHAR},
+      USER_BIRTHDAY = #{userBirthday,jdbcType=DATE}
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>
